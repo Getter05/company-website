@@ -46,8 +46,12 @@
 
     /* ── Nav ── */
     #navbar {
-      position: fixed; top: 0; left: 0; right: 0; z-index: 100;
-      background: rgba(7,13,26,0.93);
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      z-index: 1000;
+      background: rgba(7, 13, 26, 0.96);
       backdrop-filter: blur(16px);
       -webkit-backdrop-filter: blur(16px);
       border-bottom: 1px solid var(--border);
@@ -57,18 +61,24 @@
     .nav-inner {
       max-width: 1200px; margin: 0 auto;
       display: flex; align-items: center; justify-content: space-between;
-      padding: 0 1.5rem; height: 64px;
+      padding: 0 1.5rem;
+      height: 74px;
     }
     .nav-brand {
-      display: flex; align-items: center;
+      display: flex;
+      align-items: center;
       text-decoration: none;
       flex-shrink: 0;
+      background: transparent;
     }
-    .nav-brand img {
-      height: 52px;
+
+    .nav-brand img,
+    .site-logo {
+      height: 58px;
       width: auto;
       display: block;
       object-fit: contain;
+      background: transparent;
     }
     .nav-links { display: flex; align-items: center; gap: 4px; }
     .nav-links a {
@@ -103,7 +113,11 @@
 
     #mobile-menu {
       display: none;
-      position: fixed; top: 64px; left: 0; right: 0; z-index: 99;
+      position: fixed;
+      top: 74px;
+      left: 0;
+      right: 0;
+      z-index: 999;
       background: var(--bg2);
       border-bottom: 1px solid var(--border);
       padding: 1rem 1.5rem 1.5rem;
@@ -345,12 +359,8 @@
 ════════════════════════════════ -->
 <nav id="navbar">
   <div class="nav-inner">
-    <a href__="#home" class="nav-brand">
-      <img
-        src="https://media.base44.com/images/public/user_6a21e398a64e8e522d870d53/d5c3639aa_37DBDC0A-2402-42CB-B357-46EC191BAFFB.png"
-        alt="Matthew Getter Websites"
-        style="height:54px; width:auto; display:block; object-fit:contain; filter:brightness(0) invert(1);"
-      />
+    <a href_="#home" class="nav-brand">
+      <img src="logo.png" alt="Matthew Getter Logo" class="site-logo">
     </a>
 
     <!-- Desktop links -->
@@ -386,7 +396,7 @@
 <!-- ════════════════════════════════
      HERO
 ════════════════════════════════ -->
-<section id="home" style="min-height: 100svh; min-height: 100vh; display: flex; flex-direction: column; justify-content: center; padding: 8rem 1.5rem 5rem; background: var(--bg); position: relative; overflow: hidden;">
+<section id="home" style="min-height: 100svh; min-height: 100vh; display: flex; flex-direction: column; justify-content: center; padding: 9rem 1.5rem 5rem; background: var(--bg); position: relative; overflow: hidden;">
 
   <!-- Background gradient blobs -->
   <div style="position:absolute; inset:0; pointer-events:none; overflow:hidden;">
