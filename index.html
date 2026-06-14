@@ -1,0 +1,1019 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0" />
+  <meta name="theme-color" content="#0B1426" />
+  <meta name="description" content="Matthew Getter builds clean, professional, mobile-friendly websites for small businesses in Richmond, VA." />
+  <title>Matthew Getter — Websites for Small Businesses</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:ital,wght@0,300;0,400;0,500;0,600;0,700;1,400&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
+
+    :root {
+      --bg:       #0B1426;
+      --bg2:      #0F172A;
+      --bg3:      #1E293B;
+      --bg4:      #263147;
+      --blue:     #2563EB;
+      --blue-lt:  #3B82F6;
+      --orange:   #F97316;
+      --orange-lt:#FB923C;
+      --text:     #E5E7EB;
+      --muted:    #94A3B8;
+      --border:   rgba(255,255,255,0.08);
+      --card-shadow: 0 4px 24px rgba(0,0,0,0.3);
+    }
+
+    body {
+      background: var(--bg);
+      color: var(--text);
+      font-family: 'Inter', sans-serif;
+      overflow-x: hidden;
+      -webkit-font-smoothing: antialiased;
+      line-height: 1.6;
+    }
+
+    h1, h2, h3, h4 {
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      letter-spacing: -0.02em;
+    }
+
+    /* ── Nav ── */
+    #navbar {
+      position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+      background: rgba(11,20,38,0.92);
+      backdrop-filter: blur(16px);
+      -webkit-backdrop-filter: blur(16px);
+      border-bottom: 1px solid var(--border);
+      transition: box-shadow 0.3s;
+    }
+    #navbar.scrolled { box-shadow: 0 2px 20px rgba(0,0,0,0.4); }
+    .nav-inner {
+      max-width: 1200px; margin: 0 auto;
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 0 1.5rem; height: 64px;
+    }
+    .nav-brand {
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      font-weight: 700; font-size: 1rem;
+      color: var(--text); text-decoration: none;
+      white-space: nowrap;
+    }
+    .nav-brand span { color: var(--orange); }
+    .nav-links { display: flex; align-items: center; gap: 4px; }
+    .nav-links a {
+      color: var(--muted); text-decoration: none;
+      font-size: 0.78rem; font-weight: 500;
+      padding: 6px 10px; border-radius: 6px;
+      transition: color 0.2s, background 0.2s;
+      white-space: nowrap;
+    }
+    .nav-links a:hover { color: var(--text); background: rgba(255,255,255,0.05); }
+    .nav-cta {
+      background: var(--orange); color: #fff !important;
+      padding: 8px 16px !important; border-radius: 8px !important;
+      font-weight: 600 !important;
+    }
+    .nav-cta:hover { background: var(--orange-lt) !important; }
+
+    /* Mobile menu */
+    #hamburger {
+      display: none; flex-direction: column; gap: 5px;
+      background: none; border: none; cursor: pointer;
+      padding: 8px; -webkit-tap-highlight-color: transparent;
+    }
+    #hamburger span {
+      display: block; width: 22px; height: 2px;
+      background: var(--text); border-radius: 2px;
+      transition: all 0.3s;
+    }
+    #hamburger.open span:nth-child(1) { transform: rotate(45deg) translate(5px, 5px); }
+    #hamburger.open span:nth-child(2) { opacity: 0; }
+    #hamburger.open span:nth-child(3) { transform: rotate(-45deg) translate(5px, -5px); }
+
+    #mobile-menu {
+      display: none;
+      position: fixed; top: 64px; left: 0; right: 0; z-index: 99;
+      background: var(--bg2);
+      border-bottom: 1px solid var(--border);
+      padding: 1rem 1.5rem 1.5rem;
+    }
+    #mobile-menu.open { display: flex; flex-direction: column; gap: 2px; }
+    #mobile-menu a {
+      color: var(--muted); text-decoration: none;
+      font-size: 0.9rem; font-weight: 500;
+      padding: 12px 0;
+      border-bottom: 1px solid var(--border);
+      display: block;
+      transition: color 0.2s;
+    }
+    #mobile-menu a:last-child { border-bottom: none; }
+    #mobile-menu a:hover { color: var(--text); }
+
+    /* ── Reveal ── */
+    .reveal {
+      opacity: 0; transform: translateY(20px);
+      transition: opacity 0.6s ease, transform 0.6s ease;
+    }
+    .reveal.visible { opacity: 1; transform: translateY(0); }
+
+    /* ── Section labels ── */
+    .section-label {
+      display: inline-flex; align-items: center; gap: 8px;
+      font-size: 0.72rem; font-weight: 600;
+      text-transform: uppercase; letter-spacing: 0.12em;
+      color: var(--blue-lt); margin-bottom: 1rem;
+    }
+    .section-label::before {
+      content: '';
+      display: block; width: 20px; height: 2px;
+      background: var(--blue-lt); border-radius: 2px;
+    }
+
+    /* ── Section padding ── */
+    .section-pad { padding: 5rem 1.5rem; }
+    @media (min-width: 768px) { .section-pad { padding: 7rem 2rem; } }
+
+    /* ── Cards ── */
+    .card {
+      background: var(--bg3);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 1.5rem;
+      box-shadow: var(--card-shadow);
+      transition: border-color 0.25s, transform 0.25s;
+    }
+    @media (hover: hover) {
+      .card:hover { border-color: rgba(37,99,235,0.3); transform: translateY(-3px); }
+    }
+
+    /* ── Buttons ── */
+    .btn-orange {
+      display: inline-flex; align-items: center; justify-content: center; gap: 8px;
+      background: var(--orange); color: #fff;
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      font-weight: 700; font-size: 0.88rem;
+      padding: 14px 28px; border-radius: 10px;
+      text-decoration: none; border: none; cursor: pointer;
+      transition: background 0.2s, transform 0.15s, box-shadow 0.2s;
+      min-height: 48px; white-space: nowrap;
+      box-shadow: 0 4px 14px rgba(249,115,22,0.3);
+      -webkit-tap-highlight-color: transparent;
+    }
+    .btn-orange:hover { background: var(--orange-lt); transform: translateY(-1px); box-shadow: 0 6px 20px rgba(249,115,22,0.4); }
+    .btn-orange:active { transform: scale(0.97); }
+
+    .btn-outline {
+      display: inline-flex; align-items: center; justify-content: center; gap: 8px;
+      background: transparent; color: var(--text);
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      font-weight: 600; font-size: 0.88rem;
+      padding: 13px 26px; border-radius: 10px;
+      border: 1.5px solid rgba(255,255,255,0.2);
+      text-decoration: none; cursor: pointer;
+      transition: border-color 0.2s, color 0.2s, transform 0.15s;
+      min-height: 48px; white-space: nowrap;
+      -webkit-tap-highlight-color: transparent;
+    }
+    .btn-outline:hover { border-color: var(--blue-lt); color: var(--blue-lt); transform: translateY(-1px); }
+    .btn-outline:active { transform: scale(0.97); }
+
+    .btn-blue {
+      display: inline-flex; align-items: center; justify-content: center; gap: 8px;
+      background: var(--blue); color: #fff;
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      font-weight: 700; font-size: 0.85rem;
+      padding: 12px 22px; border-radius: 8px;
+      text-decoration: none; border: none; cursor: pointer;
+      transition: background 0.2s, transform 0.15s;
+      min-height: 44px; white-space: nowrap;
+      -webkit-tap-highlight-color: transparent;
+    }
+    .btn-blue:hover { background: var(--blue-lt); transform: translateY(-1px); }
+
+    /* ── FAQ ── */
+    .faq-item { border-bottom: 1px solid var(--border); }
+    .faq-btn {
+      width: 100%; background: none; border: none; cursor: pointer;
+      display: flex; justify-content: space-between; align-items: center;
+      gap: 1rem;
+      padding: 1.25rem 0;
+      text-align: left;
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      font-size: 0.95rem; font-weight: 600;
+      color: var(--text);
+      -webkit-tap-highlight-color: transparent;
+    }
+    .faq-btn .icon {
+      flex-shrink: 0; width: 22px; height: 22px;
+      border-radius: 50%; background: var(--bg4);
+      display: flex; align-items: center; justify-content: center;
+      transition: background 0.2s, transform 0.3s;
+      color: var(--orange);
+    }
+    .faq-btn[aria-expanded="true"] .icon { transform: rotate(45deg); background: var(--orange); color: #fff; }
+    .faq-answer {
+      display: none;
+      padding: 0 0 1.25rem;
+      color: var(--muted);
+      font-size: 0.9rem; line-height: 1.75;
+    }
+    .faq-answer.open { display: block; }
+
+    /* ── Form inputs ── */
+    .form-input {
+      width: 100%;
+      background: var(--bg4);
+      border: 1.5px solid var(--border);
+      border-radius: 8px;
+      padding: 12px 14px;
+      color: var(--text);
+      font-family: 'Inter', sans-serif;
+      font-size: 0.9rem;
+      transition: border-color 0.2s;
+      outline: none;
+    }
+    .form-input:focus { border-color: var(--blue-lt); }
+    .form-input::placeholder { color: var(--muted); }
+    label { font-size: 0.82rem; font-weight: 500; color: var(--muted); margin-bottom: 5px; display: block; }
+    .form-group { display: flex; flex-direction: column; gap: 5px; }
+    select.form-input option { background: var(--bg3); }
+
+    /* ── Star rating ── */
+    .star-row { display: flex; gap: 4px; }
+    .star-btn {
+      background: none; border: none; cursor: pointer;
+      font-size: 1.5rem; color: var(--bg4); padding: 2px;
+      transition: color 0.15s; -webkit-tap-highlight-color: transparent;
+    }
+    .star-btn.active, .star-btn:hover ~ .star-btn, .star-btn:hover { color: var(--orange); }
+
+    /* ── Contact info row ── */
+    .contact-row {
+      display: flex; align-items: flex-start; gap: 1rem;
+      padding: 1.25rem; background: var(--bg3);
+      border: 1px solid var(--border); border-radius: 10px;
+      text-decoration: none;
+      transition: border-color 0.2s;
+    }
+    .contact-row:hover { border-color: rgba(37,99,235,0.35); }
+    .contact-icon {
+      width: 40px; height: 40px; border-radius: 8px;
+      background: rgba(37,99,235,0.12);
+      border: 1px solid rgba(37,99,235,0.2);
+      display: flex; align-items: center; justify-content: center;
+      flex-shrink: 0;
+    }
+
+    /* ── Orange dot ── */
+    .orange-dot { width: 8px; height: 8px; border-radius: 50%; background: var(--orange); flex-shrink: 0; }
+
+    /* ── Skill pill ── */
+    .skill-pill {
+      display: inline-block;
+      background: rgba(37,99,235,0.1);
+      border: 1px solid rgba(37,99,235,0.2);
+      color: var(--blue-lt);
+      font-size: 0.75rem; font-weight: 500;
+      padding: 4px 11px; border-radius: 999px;
+      white-space: nowrap;
+    }
+
+    a, button { min-height: 44px; display: inline-flex; align-items: center; }
+    a.card, a.contact-row { display: block; min-height: auto; }
+    span { min-height: auto; display: inline; }
+
+    /* ── Responsive grid helpers ── */
+    @media (min-width: 768px) {
+      #desktop-links { display: flex !important; }
+      #hamburger     { display: none !important; }
+      #mobile-menu   { display: none !important; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- ════════════════════════════════
+     NAVBAR
+════════════════════════════════ -->
+<nav id="navbar">
+  <div class="nav-inner">
+    <a href="#home" class="nav-brand">Matthew Getter <span>Websites</span></a>
+
+    <!-- Desktop links -->
+    <div class="nav-links" id="desktop-links" style="display:none;">
+      <a href="#why">Why a Website</a>
+      <a href="#services">What I Build</a>
+      <a href="#work">My Work</a>
+      <a href="#about">About</a>
+      <a href="#reviews">Reviews</a>
+      <a href="#faq">FAQ</a>
+      <a href="#contact" class="nav-cta">Contact</a>
+    </div>
+
+    <!-- Mobile -->
+    <button id="hamburger" aria-label="Toggle menu">
+      <span></span><span></span><span></span>
+    </button>
+  </div>
+</nav>
+
+<!-- Mobile dropdown -->
+<div id="mobile-menu">
+  <a href="#why"      onclick="closeMenu()">Why a Website Matters</a>
+  <a href="#services" onclick="closeMenu()">What I Build</a>
+  <a href="#work"     onclick="closeMenu()">My Work</a>
+  <a href="#about"    onclick="closeMenu()">About</a>
+  <a href="#reviews"  onclick="closeMenu()">Reviews</a>
+  <a href="#faq"      onclick="closeMenu()">FAQ</a>
+  <a href="#contact"  onclick="closeMenu()" style="color:var(--orange); font-weight:600;">Contact</a>
+</div>
+
+
+<!-- ════════════════════════════════
+     HERO
+════════════════════════════════ -->
+<section id="home" style="min-height: 100svh; min-height: 100vh; display: flex; flex-direction: column; justify-content: center; padding: 8rem 1.5rem 5rem; background: var(--bg); position: relative; overflow: hidden;">
+
+  <!-- Background gradient -->
+  <div style="position:absolute; inset:0; pointer-events:none; overflow:hidden;">
+    <div style="position:absolute; top:-100px; left:-100px; width:600px; height:600px; background:radial-gradient(circle, rgba(37,99,235,0.08) 0%, transparent 65%);"></div>
+    <div style="position:absolute; bottom:-100px; right:-100px; width:500px; height:500px; background:radial-gradient(circle, rgba(249,115,22,0.06) 0%, transparent 65%);"></div>
+  </div>
+
+  <div style="max-width:1100px; margin:0 auto; width:100%; position:relative; z-index:1;">
+
+    <!-- Label -->
+    <div class="reveal section-label" style="margin-bottom:1.5rem;">Richmond, VA · Sole Proprietor</div>
+
+    <!-- Headline -->
+    <h1 class="reveal" style="font-size:clamp(2.4rem,7vw,5rem); font-weight:800; line-height:1.1; margin-bottom:1.5rem; transition-delay:100ms; max-width:760px;">
+      Simple, professional websites for small businesses
+      <span style="color:var(--orange);"> without one.</span>
+    </h1>
+
+    <!-- Subheadline -->
+    <p class="reveal" style="font-size:clamp(1rem,2.5vw,1.2rem); color:var(--muted); line-height:1.75; max-width:580px; margin-bottom:2.5rem; transition-delay:200ms;">
+      I help local businesses get online with clean, mobile-friendly websites that make it easier for customers to find, trust, and contact them.
+    </p>
+
+    <!-- CTA buttons -->
+    <div class="reveal" style="display:flex; flex-wrap:wrap; gap:12px; margin-bottom:3rem; transition-delay:300ms;">
+      <a href="#contact" class="btn-orange">
+        Get Started
+        <svg xmlns="http://www.w3.org/2000/svg" style="width:16px;height:16px;" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5"><path stroke-linecap="round" stroke-linejoin="round" d="M17.25 8.25L21 12m0 0l-3.75 3.75M21 12H3"/></svg>
+      </a>
+      <a href="https://victorious-smoke-0c30efc10.7.azurestaticapps.net/" target="_blank" rel="noopener noreferrer" class="btn-outline">
+        View Sample Website
+        <svg xmlns="http://www.w3.org/2000/svg" style="width:15px;height:15px;" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M13.5 6H5.25A2.25 2.25 0 003 8.25v10.5A2.25 2.25 0 005.25 21h10.5A2.25 2.25 0 0018 18.75V10.5m-10.5 6L21 3m0 0h-5.25M21 3v5.25"/></svg>
+      </a>
+    </div>
+
+    <!-- Trust statement -->
+    <div class="reveal" style="background:var(--bg3); border:1px solid var(--border); border-left:3px solid var(--blue); border-radius:10px; padding:1.25rem 1.5rem; max-width:680px; transition-delay:400ms;">
+      <p style="font-size:0.9rem; color:var(--muted); line-height:1.8; font-style:italic;">
+        I am a sole proprietor, so every client works directly with me. My goal is to build simple, professional, mobile-friendly websites that help small businesses look trustworthy online and make it easier for customers to contact them. I focus on clear communication, honest pricing, and practical websites that fit the needs of each business.
+      </p>
+      <p style="margin-top:0.75rem; font-size:0.85rem; font-weight:600; color:var(--text);">— Matthew Getter</p>
+    </div>
+
+  </div>
+</section>
+
+
+<!-- ════════════════════════════════
+     WHY A WEBSITE MATTERS
+════════════════════════════════ -->
+<section id="why" class="section-pad" style="background:var(--bg2); border-top:1px solid var(--border);">
+  <div style="max-width:1100px; margin:0 auto;">
+
+    <div class="reveal" style="margin-bottom:3rem; max-width:640px;">
+      <div class="section-label">Why a Website Matters</div>
+      <h2 style="font-size:clamp(2rem,5vw,3rem); font-weight:800; line-height:1.2; margin-bottom:1rem;">
+        Your customers are already looking online.
+      </h2>
+      <p style="color:var(--muted); font-size:0.95rem; line-height:1.8;">
+        A website gives customers a place to learn who you are, what you offer, where you serve, and how to contact you. For many small businesses, a clean website can make the business look more established and easier to trust before the customer ever calls.
+      </p>
+    </div>
+
+    <!-- Stat cards -->
+    <div id="stats-grid" style="display:grid; grid-template-columns:1fr; gap:1rem;">
+
+      <div class="card reveal" style="transition-delay:0ms;">
+        <p style="font-size:2.5rem; font-family:'Plus Jakarta Sans',sans-serif; font-weight:800; color:var(--orange); line-height:1; margin-bottom:0.6rem;">93%</p>
+        <p style="font-weight:600; margin-bottom:0.35rem;">Of Americans are online</p>
+        <p style="color:var(--muted); font-size:0.85rem; line-height:1.7;">There were 322 million internet users in the US at the start of 2025, with internet penetration at 93.1%. Your customers are searching online every day.</p>
+        <p style="color:var(--bg4); font-size:0.68rem; margin-top:0.75rem; font-style:italic;">Source: DataReportal, Digital 2025</p>
+      </div>
+
+      <div class="card reveal" style="transition-delay:100ms;">
+        <p style="font-size:2.5rem; font-family:'Plus Jakarta Sans',sans-serif; font-weight:800; color:var(--orange); line-height:1; margin-bottom:0.6rem;">97%</p>
+        <p style="font-weight:600; margin-bottom:0.35rem;">Of consumers read online reviews</p>
+        <p style="color:var(--muted); font-size:0.85rem; line-height:1.7;">97% of consumers read reviews for local businesses before making a decision. A website with a reviews section helps you build credibility.</p>
+        <p style="color:var(--bg4); font-size:0.68rem; margin-top:0.75rem; font-style:italic;">Source: BrightLocal, 2026</p>
+      </div>
+
+      <div class="card reveal" style="transition-delay:200ms;">
+        <p style="font-size:2.5rem; font-family:'Plus Jakarta Sans',sans-serif; font-weight:800; color:var(--orange); line-height:1; margin-bottom:0.6rem;">72%</p>
+        <p style="font-weight:600; margin-bottom:0.35rem;">Of businesses have a website</p>
+        <p style="color:var(--muted); font-size:0.85rem; line-height:1.7;">72% of businesses had a website in 2025. If your competitors are online and you're not, customers will likely choose them first.</p>
+        <p style="color:var(--bg4); font-size:0.68rem; margin-top:0.75rem; font-style:italic;">Source: Forbes Advisor, 2025</p>
+      </div>
+
+      <div class="card reveal" style="transition-delay:300ms;">
+        <p style="font-size:2.5rem; font-family:'Plus Jakarta Sans',sans-serif; font-weight:800; color:var(--orange); line-height:1; margin-bottom:0.6rem;">85%</p>
+        <p style="font-weight:600; margin-bottom:0.35rem;">Visit within a week of finding a business online</p>
+        <p style="color:var(--muted); font-size:0.85rem; line-height:1.7;">85% of consumers visit a local business within a week of discovering it online. Being findable online turns searches into real customers.</p>
+        <p style="color:var(--bg4); font-size:0.68rem; margin-top:0.75rem; font-style:italic;">Source: Uberall</p>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+
+<!-- ════════════════════════════════
+     WHAT I BUILD
+════════════════════════════════ -->
+<section id="services" class="section-pad" style="background:var(--bg); border-top:1px solid var(--border);">
+  <div style="max-width:1100px; margin:0 auto;">
+
+    <div class="reveal" style="margin-bottom:3rem; max-width:580px;">
+      <div class="section-label">What I Build</div>
+      <h2 style="font-size:clamp(2rem,5vw,3rem); font-weight:800; line-height:1.2; margin-bottom:1rem;">
+        Practical websites built for real businesses.
+      </h2>
+      <p style="color:var(--muted); font-size:0.95rem; line-height:1.8;">
+        Every website I build is designed to be simple to understand, easy to navigate, and professional looking — so your customers immediately know what you do and how to reach you.
+      </p>
+    </div>
+
+    <div id="services-grid" style="display:grid; grid-template-columns:1fr; gap:1rem;">
+
+      <div class="card reveal" style="transition-delay:0ms; display:flex; gap:1rem; align-items:flex-start;">
+        <div style="width:44px; height:44px; background:rgba(249,115,22,0.1); border:1px solid rgba(249,115,22,0.2); border-radius:10px; display:flex; align-items:center; justify-content:center; flex-shrink:0;">
+          <svg xmlns="http://www.w3.org/2000/svg" style="width:22px;height:22px;color:var(--orange);" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5"><path stroke-linecap="round" stroke-linejoin="round" d="M12 21a9.004 9.004 0 008.716-6.747M12 21a9.004 9.004 0 01-8.716-6.747M12 21c2.485 0 4.5-4.03 4.5-9S14.485 3 12 3m0 18c-2.485 0-4.5-4.03-4.5-9S9.515 3 12 3m0 0a8.997 8.997 0 017.843 4.582M12 3a8.997 8.997 0 00-7.843 4.582m15.686 0A11.953 11.953 0 0112 10.5c-2.998 0-5.74-1.1-7.843-2.918m15.686 0A8.959 8.959 0 0121 12c0 .778-.099 1.533-.284 2.253m0 0A17.919 17.919 0 0112 16.5c-3.162 0-6.133-.815-8.716-2.247m0 0A9.015 9.015 0 013 12c0-1.605.42-3.113 1.157-4.418"/></svg>
+        </div>
+        <div>
+          <h3 style="font-size:1rem; font-weight:700; margin-bottom:0.4rem;">One-Page Business Websites</h3>
+          <p style="color:var(--muted); font-size:0.87rem; line-height:1.7;">A clean, professional single-page website covering everything your customers need to know — who you are, what you do, and how to reach you.</p>
+        </div>
+      </div>
+
+      <div class="card reveal" style="transition-delay:80ms; display:flex; gap:1rem; align-items:flex-start;">
+        <div style="width:44px; height:44px; background:rgba(249,115,22,0.1); border:1px solid rgba(249,115,22,0.2); border-radius:10px; display:flex; align-items:center; justify-content:center; flex-shrink:0;">
+          <svg xmlns="http://www.w3.org/2000/svg" style="width:22px;height:22px;color:var(--orange);" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5"><path stroke-linecap="round" stroke-linejoin="round" d="M21.75 6.75v10.5a2.25 2.25 0 01-2.25 2.25h-15a2.25 2.25 0 01-2.25-2.25V6.75m19.5 0A2.25 2.25 0 0019.5 4.5h-15a2.25 2.25 0 00-2.25 2.25m19.5 0v.243a2.25 2.25 0 01-1.07 1.916l-7.5 4.615a2.25 2.25 0 01-2.36 0L3.32 8.91a2.25 2.25 0 01-1.07-1.916V6.75"/></svg>
+        </div>
+        <div>
+          <h3 style="font-size:1rem; font-weight:700; margin-bottom:0.4rem;">Contact Forms</h3>
+          <p style="color:var(--muted); font-size:0.87rem; line-height:1.7;">A simple form so customers can send you a message directly from your website — making it easy for people to reach you without having to hunt for your number.</p>
+        </div>
+      </div>
+
+      <div class="card reveal" style="transition-delay:160ms; display:flex; gap:1rem; align-items:flex-start;">
+        <div style="width:44px; height:44px; background:rgba(249,115,22,0.1); border:1px solid rgba(249,115,22,0.2); border-radius:10px; display:flex; align-items:center; justify-content:center; flex-shrink:0;">
+          <svg xmlns="http://www.w3.org/2000/svg" style="width:22px;height:22px;color:var(--orange);" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5"><path stroke-linecap="round" stroke-linejoin="round" d="M10.5 1.5H8.25A2.25 2.25 0 006 3.75v16.5a2.25 2.25 0 002.25 2.25h7.5A2.25 2.25 0 0018 20.25V3.75a2.25 2.25 0 00-2.25-2.25H13.5m-3 0V3h3V1.5m-3 0h3m-3 18.75h3"/></svg>
+        </div>
+        <div>
+          <h3 style="font-size:1rem; font-weight:700; margin-bottom:0.4rem;">Mobile-Friendly Layouts</h3>
+          <p style="color:var(--muted); font-size:0.87rem; line-height:1.7;">Every website I build looks great and works properly on phones, tablets, and desktop screens — because most of your customers are browsing on their phones.</p>
+        </div>
+      </div>
+
+      <div class="card reveal" style="transition-delay:240ms; display:flex; gap:1rem; align-items:flex-start;">
+        <div style="width:44px; height:44px; background:rgba(249,115,22,0.1); border:1px solid rgba(249,115,22,0.2); border-radius:10px; display:flex; align-items:center; justify-content:center; flex-shrink:0;">
+          <svg xmlns="http://www.w3.org/2000/svg" style="width:22px;height:22px;color:var(--orange);" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5"><path stroke-linecap="round" stroke-linejoin="round" d="M8.25 6.75h12M8.25 12h12m-12 5.25h12M3.75 6.75h.007v.008H3.75V6.75zm.375 0a.375.375 0 11-.75 0 .375.375 0 01.75 0zM3.75 12h.007v.008H3.75V12zm.375 0a.375.375 0 11-.75 0 .375.375 0 01.75 0zm-.375 5.25h.007v.008H3.75v-.008zm.375 0a.375.375 0 11-.75 0 .375.375 0 01.75 0z"/></svg>
+        </div>
+        <div>
+          <h3 style="font-size:1rem; font-weight:700; margin-bottom:0.4rem;">Service Information Sections</h3>
+          <p style="color:var(--muted); font-size:0.87rem; line-height:1.7;">A clearly organized section on your site that explains what you offer so customers know right away whether you're the right fit for them.</p>
+        </div>
+      </div>
+
+      <div class="card reveal" style="transition-delay:320ms; display:flex; gap:1rem; align-items:flex-start;">
+        <div style="width:44px; height:44px; background:rgba(249,115,22,0.1); border:1px solid rgba(249,115,22,0.2); border-radius:10px; display:flex; align-items:center; justify-content:center; flex-shrink:0;">
+          <svg xmlns="http://www.w3.org/2000/svg" style="width:22px;height:22px;color:var(--orange);" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5"><path stroke-linecap="round" stroke-linejoin="round" d="M5.25 14.25h13.5m-13.5 0a3 3 0 01-3-3m3 3a3 3 0 100 6h13.5a3 3 0 100-6m-16.5-3a3 3 0 013-3h13.5a3 3 0 013 3m-19.5 0a4.5 4.5 0 01.9-2.7L5.737 5.1a3.375 3.375 0 012.7-1.35h7.126c1.062 0 2.062.5 2.7 1.35l2.587 3.45a4.5 4.5 0 01.9 2.7m0 0a3 3 0 01-3 3m0 3h.008v.008h-.008v-.008zm0-6h.008v.008h-.008v-.008zm-3 6h.008v.008h-.008v-.008zm0-6h.008v.008h-.008v-.008z"/></svg>
+        </div>
+        <div>
+          <h3 style="font-size:1rem; font-weight:700; margin-bottom:0.4rem;">Hosting &amp; Deployment Setup</h3>
+          <p style="color:var(--muted); font-size:0.87rem; line-height:1.7;">I handle the technical side of getting your site live — including hosting setup and deployment — so you don't have to figure it out yourself.</p>
+        </div>
+      </div>
+
+      <div class="card reveal" style="transition-delay:400ms; display:flex; gap:1rem; align-items:flex-start;">
+        <div style="width:44px; height:44px; background:rgba(249,115,22,0.1); border:1px solid rgba(249,115,22,0.2); border-radius:10px; display:flex; align-items:center; justify-content:center; flex-shrink:0;">
+          <svg xmlns="http://www.w3.org/2000/svg" style="width:22px;height:22px;color:var(--orange);" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5"><path stroke-linecap="round" stroke-linejoin="round" d="M16.023 9.348h4.992v-.001M2.985 19.644v-4.992m0 0h4.992m-4.993 0l3.181 3.183a8.25 8.25 0 0013.803-3.7M4.031 9.865a8.25 8.25 0 0113.803-3.7l3.181 3.182m0-4.991v4.99"/></svg>
+        </div>
+        <div>
+          <h3 style="font-size:1rem; font-weight:700; margin-bottom:0.4rem;">Updates &amp; Maintenance</h3>
+          <p style="color:var(--muted); font-size:0.87rem; line-height:1.7;">After your site is live, I'm available for simple updates — changing hours, adding a service, or refreshing content when your business changes.</p>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+
+<!-- ════════════════════════════════
+     MY WORK / PORTFOLIO
+════════════════════════════════ -->
+<section id="work" class="section-pad" style="background:var(--bg2); border-top:1px solid var(--border);">
+  <div style="max-width:1100px; margin:0 auto;">
+
+    <div class="reveal" style="margin-bottom:3rem;">
+      <div class="section-label">My Work</div>
+      <h2 style="font-size:clamp(2rem,5vw,3rem); font-weight:800; line-height:1.2;">Projects</h2>
+    </div>
+
+    <div id="work-grid" style="display:grid; grid-template-columns:1fr; gap:1.25rem;">
+
+      <!-- Project 1 -->
+      <div class="card reveal" style="transition-delay:0ms; position:relative; overflow:hidden;">
+        <div style="position:absolute; top:1.25rem; right:1.25rem;">
+          <span style="background:rgba(249,115,22,0.1); border:1px solid rgba(249,115,22,0.25); color:var(--orange); font-size:0.65rem; font-weight:600; padding:4px 10px; border-radius:999px;">Live</span>
+        </div>
+        <div style="width:48px; height:48px; background:rgba(37,99,235,0.1); border:1px solid rgba(37,99,235,0.2); border-radius:10px; display:flex; align-items:center; justify-content:center; margin-bottom:1.25rem;">
+          <svg xmlns="http://www.w3.org/2000/svg" style="width:24px;height:24px;color:var(--blue-lt);" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5"><path stroke-linecap="round" stroke-linejoin="round" d="M12 21a9.004 9.004 0 008.716-6.747M12 21a9.004 9.004 0 01-8.716-6.747M12 21c2.485 0 4.5-4.03 4.5-9S14.485 3 12 3m0 18c-2.485 0-4.5-4.03-4.5-9S9.515 3 12 3m0 0a8.997 8.997 0 017.843 4.582M12 3a8.997 8.997 0 00-7.843 4.582m15.686 0A11.953 11.953 0 0112 10.5c-2.998 0-5.74-1.1-7.843-2.918m15.686 0A8.959 8.959 0 0121 12c0 .778-.099 1.533-.284 2.253m0 0A17.919 17.919 0 0112 16.5c-3.162 0-6.133-.815-8.716-2.247m0 0A9.015 9.015 0 013 12c0-1.605.42-3.113 1.157-4.418"/></svg>
+        </div>
+        <h3 style="font-size:1.2rem; font-weight:700; margin-bottom:0.6rem;">Sample Business Website</h3>
+        <p style="color:var(--muted); font-size:0.9rem; line-height:1.75; margin-bottom:1.5rem;">A sample website built to show the type of clean, professional site I can create for a small business. Fully mobile responsive, fast loading, and designed to build customer trust.</p>
+        <div style="display:flex; flex-wrap:wrap; gap:6px; margin-bottom:1.5rem;">
+          <span class="skill-pill">HTML</span>
+          <span class="skill-pill">CSS</span>
+          <span class="skill-pill">Responsive</span>
+          <span class="skill-pill">Mobile-First</span>
+        </div>
+        <a href="https://victorious-smoke-0c30efc10.7.azurestaticapps.net/" target="_blank" rel="noopener noreferrer" class="btn-orange" style="font-size:0.82rem; padding:11px 20px;">
+          View Sample Website
+          <svg xmlns="http://www.w3.org/2000/svg" style="width:14px;height:14px;" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5"><path stroke-linecap="round" stroke-linejoin="round" d="M13.5 6H5.25A2.25 2.25 0 003 8.25v10.5A2.25 2.25 0 005.25 21h10.5A2.25 2.25 0 0018 18.75V10.5m-10.5 6L21 3m0 0h-5.25M21 3v5.25"/></svg>
+        </a>
+      </div>
+
+      <!-- Project 2 -->
+      <div class="card reveal" style="transition-delay:150ms; position:relative; overflow:hidden;">
+        <div style="position:absolute; top:1.25rem; right:1.25rem;">
+          <span style="background:rgba(37,99,235,0.1); border:1px solid rgba(37,99,235,0.25); color:var(--blue-lt); font-size:0.65rem; font-weight:600; padding:4px 10px; border-radius:999px;">Deployed</span>
+        </div>
+        <div style="width:48px; height:48px; background:rgba(37,99,235,0.1); border:1px solid rgba(37,99,235,0.2); border-radius:10px; display:flex; align-items:center; justify-content:center; margin-bottom:1.25rem;">
+          <svg xmlns="http://www.w3.org/2000/svg" style="width:24px;height:24px;color:var(--blue-lt);" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5"><path stroke-linecap="round" stroke-linejoin="round" d="M2.25 15a4.5 4.5 0 004.5 4.5H18a3.75 3.75 0 001.332-7.257 3 3 0 00-3.758-3.848 5.25 5.25 0 00-10.233 2.33A4.502 4.502 0 002.25 15z"/></svg>
+        </div>
+        <h3 style="font-size:1.2rem; font-weight:700; margin-bottom:0.6rem;">Azure Function App Project</h3>
+        <p style="color:var(--muted); font-size:0.9rem; line-height:1.75; margin-bottom:1.5rem;">I built a Microsoft Azure Function App that connects to external APIs, runs automatically on a daily schedule, and sends webhook notifications to a personal device. This demonstrates my ability to build and deploy practical cloud-based tools beyond just websites.</p>
+        <div style="display:flex; flex-wrap:wrap; gap:6px; margin-bottom:1.5rem;">
+          <span class="skill-pill">Microsoft Azure</span>
+          <span class="skill-pill">REST APIs</span>
+          <span class="skill-pill">Cloud Deployment</span>
+          <span class="skill-pill">Webhooks</span>
+        </div>
+        <a href="#about" class="btn-blue" style="font-size:0.82rem; padding:11px 20px;">
+          Learn More in About
+        </a>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+
+<!-- ════════════════════════════════
+     ABOUT
+════════════════════════════════ -->
+<section id="about" class="section-pad" style="background:var(--bg); border-top:1px solid var(--border);">
+  <div style="max-width:1100px; margin:0 auto;">
+
+    <div id="about-grid" style="display:grid; grid-template-columns:1fr; gap:3rem; align-items:start;">
+
+      <!-- Left: text -->
+      <div>
+        <div class="reveal section-label">About</div>
+        <h2 class="reveal" style="font-size:clamp(2rem,5vw,3rem); font-weight:800; line-height:1.2; margin-bottom:1.5rem; transition-delay:100ms;">
+          Hi, I'm Matthew Getter.
+        </h2>
+        <div class="reveal" style="display:flex; flex-direction:column; gap:1rem; color:var(--muted); font-size:0.95rem; line-height:1.85; transition-delay:200ms;">
+          <p>I am currently in school for a computer science degree. I build simple, professional websites for small businesses that need a clear online presence.</p>
+          <p>I have experience with HTML, CSS, Visual Studio Code, Microsoft Azure, and other technical tools. I have built Azure-based projects that run automatically and connect with outside APIs — so I'm comfortable with more than just design.</p>
+          <p>I also have hands-on work experience in construction and customer service, which helps me understand the real needs of local service businesses. I know what it means to work on a deadline, communicate clearly with clients, and deliver practical results.</p>
+          <p>My goal is to make the website process simple, clear, and useful for business owners who want to look more professional online — without dealing with complicated tech.</p>
+        </div>
+      </div>
+
+      <!-- Right: skills + values -->
+      <div style="display:flex; flex-direction:column; gap:1.5rem;">
+
+        <div class="card reveal" style="transition-delay:100ms;">
+          <p style="font-size:0.72rem; text-transform:uppercase; letter-spacing:0.12em; color:var(--blue-lt); font-weight:600; margin-bottom:1rem;">Technical Skills</p>
+          <div style="display:flex; flex-wrap:wrap; gap:7px;">
+            <span class="skill-pill">HTML</span>
+            <span class="skill-pill">CSS</span>
+            <span class="skill-pill">C++</span>
+            <span class="skill-pill">Bash</span>
+            <span class="skill-pill">Microsoft Azure</span>
+            <span class="skill-pill">Visual Studio Code</span>
+            <span class="skill-pill">Microsoft Visual Studio</span>
+            <span class="skill-pill">REST APIs</span>
+            <span class="skill-pill">Webhooks</span>
+            <span class="skill-pill">Microsoft Office</span>
+            <span class="skill-pill">Excel Data Analysis</span>
+          </div>
+        </div>
+
+        <div class="card reveal" style="transition-delay:200ms;">
+          <p style="font-size:0.72rem; text-transform:uppercase; letter-spacing:0.12em; color:var(--blue-lt); font-weight:600; margin-bottom:1rem;">How I Work</p>
+          <div style="display:flex; flex-direction:column; gap:0.75rem;">
+            <div style="display:flex; align-items:center; gap:10px; font-size:0.88rem;">
+              <div class="orange-dot"></div><span>Clear communication throughout the process</span>
+            </div>
+            <div style="display:flex; align-items:center; gap:10px; font-size:0.88rem;">
+              <div class="orange-dot"></div><span>Honest, straightforward pricing</span>
+            </div>
+            <div style="display:flex; align-items:center; gap:10px; font-size:0.88rem;">
+              <div class="orange-dot"></div><span>You work directly with me — not a team or middleman</span>
+            </div>
+            <div style="display:flex; align-items:center; gap:10px; font-size:0.88rem;">
+              <div class="orange-dot"></div><span>Attention to detail and professional conduct</span>
+            </div>
+            <div style="display:flex; align-items:center; gap:10px; font-size:0.88rem;">
+              <div class="orange-dot"></div><span>Practical results — no fluff, no overcomplication</span>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </div>
+</section>
+
+
+<!-- ════════════════════════════════
+     REVIEWS
+════════════════════════════════ -->
+<section id="reviews" class="section-pad" style="background:var(--bg2); border-top:1px solid var(--border);">
+  <div style="max-width:1100px; margin:0 auto;">
+
+    <div class="reveal" style="margin-bottom:3rem; max-width:580px;">
+      <div class="section-label">Reviews</div>
+      <h2 style="font-size:clamp(2rem,5vw,3rem); font-weight:800; line-height:1.2; margin-bottom:1rem;">What clients say.</h2>
+    </div>
+
+    <!-- Placeholder state -->
+    <div class="card reveal" style="text-align:center; padding:3rem 2rem; margin-bottom:2.5rem; border-style:dashed;">
+      <svg xmlns="http://www.w3.org/2000/svg" style="width:40px;height:40px;color:var(--muted);margin:0 auto 1rem;" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1"><path stroke-linecap="round" stroke-linejoin="round" d="M7.5 8.25h9m-9 3H12m-9.75 1.51c0 1.6 1.123 2.994 2.707 3.227 1.129.166 2.27.293 3.423.379.35.026.67.21.865.501L12 21l2.755-4.133a1.14 1.14 0 01.865-.501 48.172 48.172 0 003.423-.379c1.584-.233 2.707-1.626 2.707-3.228V6.741c0-1.602-1.123-2.995-2.707-3.228A48.394 48.394 0 0012 3c-2.392 0-4.744.175-7.043.513C3.373 3.746 2.25 5.14 2.25 6.741v6.018z"/></svg>
+      <p style="color:var(--muted); font-size:0.95rem;">Client reviews will appear here as projects are completed.</p>
+    </div>
+
+    <!-- Review submission form -->
+    <div class="card reveal" style="transition-delay:150ms;">
+      <h3 style="font-size:1.1rem; font-weight:700; margin-bottom:0.4rem;">Leave a Review</h3>
+      <p style="color:var(--muted); font-size:0.85rem; line-height:1.6; margin-bottom:1.5rem;">
+        Worked with me on a project? I'd love to hear your feedback.
+        <span style="color:var(--blue-lt); font-size:0.78rem; display:block; margin-top:0.25rem;">Reviews are reviewed before being published.</span>
+      </p>
+
+      <form id="review-form" onsubmit="handleReviewSubmit(event)">
+        <div id="review-fields" style="display:grid; grid-template-columns:1fr; gap:1rem;">
+
+          <div class="form-group">
+            <label for="r-name">Your Name *</label>
+            <input id="r-name" name="name" type="text" class="form-input" placeholder="Jane Smith" required />
+          </div>
+
+          <div class="form-group">
+            <label for="r-business">Business Name</label>
+            <input id="r-business" name="business" type="text" class="form-input" placeholder="Smith's Landscaping" />
+          </div>
+
+          <div class="form-group">
+            <label>Rating *</label>
+            <div class="star-row" id="star-row" role="group" aria-label="Rating">
+              <button type="button" class="star-btn" aria-label="1 star" data-val="1">★</button>
+              <button type="button" class="star-btn" aria-label="2 stars" data-val="2">★</button>
+              <button type="button" class="star-btn" aria-label="3 stars" data-val="3">★</button>
+              <button type="button" class="star-btn" aria-label="4 stars" data-val="4">★</button>
+              <button type="button" class="star-btn" aria-label="5 stars" data-val="5">★</button>
+            </div>
+            <input type="hidden" id="r-rating" name="rating" value="0" required />
+          </div>
+
+          <div class="form-group">
+            <label for="r-text">Your Review *</label>
+            <textarea id="r-text" name="review" class="form-input" rows="4" placeholder="Tell us about your experience..." required style="resize:vertical; min-height:100px;"></textarea>
+          </div>
+
+          <div style="display:flex; align-items:flex-start; gap:10px;">
+            <input type="checkbox" id="r-permission" name="permission" required style="width:18px; height:18px; margin-top:2px; accent-color:var(--orange); flex-shrink:0; cursor:pointer;" />
+            <label for="r-permission" style="color:var(--muted); font-size:0.83rem; line-height:1.6; margin-bottom:0; cursor:pointer;">
+              I give permission for this review to be displayed on this website after approval.
+            </label>
+          </div>
+
+          <div>
+            <button type="submit" class="btn-orange" style="font-size:0.85rem; padding:12px 24px;">
+              Submit Review
+            </button>
+          </div>
+        </div>
+
+        <!-- Success message (hidden by default) -->
+        <div id="review-success" style="display:none; padding:1.25rem; background:rgba(63,185,80,0.08); border:1px solid rgba(63,185,80,0.25); border-radius:8px; text-align:center;">
+          <p style="color:#4ADE80; font-weight:600; margin-bottom:0.35rem;">Review submitted!</p>
+          <p style="color:var(--muted); font-size:0.85rem;">Thank you — your review will be reviewed before being published.</p>
+        </div>
+      </form>
+
+      <!--
+        BACKEND NOTE:
+        The review form data (name, business, rating, review, permission) should be sent
+        to a backend endpoint (e.g. POST /api/reviews) and stored with status: "pending".
+        The site owner should be able to view, approve, reject, or delete submissions
+        from an admin panel or database before they appear publicly on this page.
+        Connect the handleReviewSubmit() function below to your backend API when ready.
+      -->
+    </div>
+  </div>
+</section>
+
+
+<!-- ════════════════════════════════
+     FAQ
+════════════════════════════════ -->
+<section id="faq" class="section-pad" style="background:var(--bg); border-top:1px solid var(--border);">
+  <div style="max-width:720px; margin:0 auto;">
+
+    <div class="reveal" style="margin-bottom:3rem;">
+      <div class="section-label">FAQ</div>
+      <h2 style="font-size:clamp(2rem,5vw,3rem); font-weight:800; line-height:1.2;">Common questions.</h2>
+    </div>
+
+    <div style="display:flex; flex-direction:column; border-top:1px solid var(--border);">
+
+      <div class="faq-item reveal" style="transition-delay:0ms;">
+        <button class="faq-btn" onclick="toggleFaq(this)" aria-expanded="false">
+          Do I need to already have a domain?
+          <span class="icon">
+            <svg xmlns="http://www.w3.org/2000/svg" style="width:12px;height:12px;" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="3"><path stroke-linecap="round" stroke-linejoin="round" d="M12 4.5v15m7.5-7.5h-15"/></svg>
+          </span>
+        </button>
+        <div class="faq-answer">No. You do not need to already have a domain. I can help you figure out what you need and walk you through the process of getting one if you want.</div>
+      </div>
+
+      <div class="faq-item reveal" style="transition-delay:80ms;">
+        <button class="faq-btn" onclick="toggleFaq(this)" aria-expanded="false">
+          Can you help me get hosting set up?
+          <span class="icon">
+            <svg xmlns="http://www.w3.org/2000/svg" style="width:12px;height:12px;" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="3"><path stroke-linecap="round" stroke-linejoin="round" d="M12 4.5v15m7.5-7.5h-15"/></svg>
+          </span>
+        </button>
+        <div class="faq-answer">Yes. Hosting and deployment setup is included in the process. I handle the technical side so you don't have to.</div>
+      </div>
+
+      <div class="faq-item reveal" style="transition-delay:160ms;">
+        <button class="faq-btn" onclick="toggleFaq(this)" aria-expanded="false">
+          How long does a website take?
+          <span class="icon">
+            <svg xmlns="http://www.w3.org/2000/svg" style="width:12px;height:12px;" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="3"><path stroke-linecap="round" stroke-linejoin="round" d="M12 4.5v15m7.5-7.5h-15"/></svg>
+          </span>
+        </button>
+        <div class="faq-answer">Most websites can be completed in about 3–4 days, depending on the project details and how quickly the needed information is provided. I keep the process straightforward so we can move quickly.</div>
+      </div>
+
+      <div class="faq-item reveal" style="transition-delay:240ms;">
+        <button class="faq-btn" onclick="toggleFaq(this)" aria-expanded="false">
+          Can I request changes after it is built?
+          <span class="icon">
+            <svg xmlns="http://www.w3.org/2000/svg" style="width:12px;height:12px;" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="3"><path stroke-linecap="round" stroke-linejoin="round" d="M12 4.5v15m7.5-7.5h-15"/></svg>
+          </span>
+        </button>
+        <div class="faq-answer">Yes. Minor changes are included. Major changes — like adding new sections or significantly redesigning part of the site — can be done for an additional cost. I'll always be upfront about what falls into which category.</div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+
+<!-- ════════════════════════════════
+     CONTACT
+════════════════════════════════ -->
+<section id="contact" class="section-pad" style="background:var(--bg2); border-top:1px solid var(--border);">
+  <div style="max-width:1100px; margin:0 auto;">
+
+    <div class="reveal" style="margin-bottom:3rem; max-width:580px;">
+      <div class="section-label">Contact</div>
+      <h2 style="font-size:clamp(2rem,5vw,3rem); font-weight:800; line-height:1.2; margin-bottom:1rem;">
+        Ready to get your business online?
+      </h2>
+      <p style="color:var(--muted); font-size:0.95rem; line-height:1.8;">
+        Reach out and tell me what kind of website your business needs. I'll follow up quickly and give you a straightforward answer.
+      </p>
+    </div>
+
+    <div id="contact-grid" style="display:grid; grid-template-columns:1fr; gap:1rem;">
+
+      <a href="mailto:matthew.getter05@gmail.com" class="contact-row reveal" style="transition-delay:0ms; text-decoration:none; color:inherit;">
+        <div class="contact-icon">
+          <svg xmlns="http://www.w3.org/2000/svg" style="width:20px;height:20px;color:var(--blue-lt);" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5"><path stroke-linecap="round" stroke-linejoin="round" d="M21.75 6.75v10.5a2.25 2.25 0 01-2.25 2.25h-15a2.25 2.25 0 01-2.25-2.25V6.75m19.5 0A2.25 2.25 0 0019.5 4.5h-15a2.25 2.25 0 00-2.25 2.25m19.5 0v.243a2.25 2.25 0 01-1.07 1.916l-7.5 4.615a2.25 2.25 0 01-2.36 0L3.32 8.91a2.25 2.25 0 01-1.07-1.916V6.75"/></svg>
+        </div>
+        <div>
+          <p style="font-size:0.72rem; color:var(--muted); text-transform:uppercase; letter-spacing:0.1em; margin-bottom:0.25rem;">Email</p>
+          <p style="font-weight:600; color:var(--blue-lt);">matthew.getter05@gmail.com</p>
+        </div>
+      </a>
+
+      <a href="tel:+18048880062" class="contact-row reveal" style="transition-delay:80ms; text-decoration:none; color:inherit;">
+        <div class="contact-icon">
+          <svg xmlns="http://www.w3.org/2000/svg" style="width:20px;height:20px;color:var(--blue-lt);" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5"><path stroke-linecap="round" stroke-linejoin="round" d="M2.25 6.75c0 8.284 6.716 15 15 15h2.25a2.25 2.25 0 002.25-2.25v-1.372c0-.516-.351-.966-.852-1.091l-4.423-1.106c-.44-.11-.902.055-1.173.417l-.97 1.293c-.282.376-.769.542-1.21.38a12.035 12.035 0 01-7.143-7.143c-.162-.441.004-.928.38-1.21l1.293-.97c.363-.271.527-.734.417-1.173L6.963 3.102a1.125 1.125 0 00-1.091-.852H4.5A2.25 2.25 0 002.25 4.5v2.25z"/></svg>
+        </div>
+        <div>
+          <p style="font-size:0.72rem; color:var(--muted); text-transform:uppercase; letter-spacing:0.1em; margin-bottom:0.25rem;">Phone</p>
+          <p style="font-size:1.3rem; font-family:'Plus Jakarta Sans',sans-serif; font-weight:700; color:var(--orange);">804-888-0062</p>
+        </div>
+      </a>
+
+      <a href="https://www.linkedin.com/in/matthew-getter" target="_blank" rel="noopener noreferrer" class="contact-row reveal" style="transition-delay:160ms; text-decoration:none; color:inherit;">
+        <div class="contact-icon">
+          <svg xmlns="http://www.w3.org/2000/svg" style="width:20px;height:20px;color:var(--blue-lt);" viewBox="0 0 24 24" fill="currentColor"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433a2.062 2.062 0 01-2.063-2.065 2.064 2.064 0 112.063 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/></svg>
+        </div>
+        <div>
+          <p style="font-size:0.72rem; color:var(--muted); text-transform:uppercase; letter-spacing:0.1em; margin-bottom:0.25rem;">LinkedIn</p>
+          <p style="font-weight:600; color:var(--blue-lt);">linkedin.com/in/matthew-getter</p>
+        </div>
+      </a>
+
+      <a href="https://app.joinhandshake.com/profiles/feye7d" target="_blank" rel="noopener noreferrer" class="contact-row reveal" style="transition-delay:240ms; text-decoration:none; color:inherit;">
+        <div class="contact-icon">
+          <svg xmlns="http://www.w3.org/2000/svg" style="width:20px;height:20px;color:var(--blue-lt);" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5"><path stroke-linecap="round" stroke-linejoin="round" d="M4.26 10.147a60.436 60.436 0 00-.491 6.347A48.627 48.627 0 0112 20.904a48.627 48.627 0 018.232-4.41 60.46 60.46 0 00-.491-6.347m-15.482 0a50.57 50.57 0 00-2.658-.813A59.905 59.905 0 0112 3.493a59.902 59.902 0 0110.399 5.84c-.896.248-1.783.52-2.658.814m-15.482 0A50.697 50.697 0 0112 13.489a50.702 50.702 0 017.74-3.342M6.75 15a.75.75 0 100-1.5.75.75 0 000 1.5zm0 0v-3.675A55.378 55.378 0 0112 8.443m-7.007 11.55A5.981 5.981 0 006.75 15.75v-1.5"/></svg>
+        </div>
+        <div>
+          <p style="font-size:0.72rem; color:var(--muted); text-transform:uppercase; letter-spacing:0.1em; margin-bottom:0.25rem;">Handshake</p>
+          <p style="font-weight:600; color:var(--blue-lt);">app.joinhandshake.com/profiles/feye7d</p>
+        </div>
+      </a>
+
+    </div>
+  </div>
+</section>
+
+
+<!-- ════════════════════════════════
+     FOOTER
+════════════════════════════════ -->
+<footer style="background:var(--bg); border-top:1px solid var(--border); padding:3rem 1.5rem;">
+  <div style="max-width:1100px; margin:0 auto;">
+
+    <div id="footer-grid" style="display:grid; grid-template-columns:1fr; gap:2rem; margin-bottom:2rem;">
+
+      <!-- Brand -->
+      <div>
+        <p style="font-family:'Plus Jakarta Sans',sans-serif; font-weight:700; font-size:1.1rem; margin-bottom:0.4rem;">Matthew Getter <span style="color:var(--orange);">Websites</span></p>
+        <p style="color:var(--muted); font-size:0.85rem; margin-bottom:0.2rem;">Website design for small businesses</p>
+        <p style="color:var(--muted); font-size:0.82rem;">Richmond, VA</p>
+      </div>
+
+      <!-- Contact -->
+      <div style="display:flex; flex-direction:column; gap:0.6rem;">
+        <p style="font-size:0.72rem; text-transform:uppercase; letter-spacing:0.1em; color:var(--muted); font-weight:600; margin-bottom:0.25rem;">Contact</p>
+        <a href="mailto:matthew.getter05@gmail.com" style="color:var(--blue-lt); text-decoration:none; font-size:0.88rem; min-height:auto; display:inline;">matthew.getter05@gmail.com</a>
+        <a href="tel:+18048880062" style="color:var(--blue-lt); text-decoration:none; font-size:0.88rem; min-height:auto; display:inline;">804-888-0062</a>
+      </div>
+
+      <!-- Links -->
+      <div style="display:flex; flex-direction:column; gap:0.6rem;">
+        <p style="font-size:0.72rem; text-transform:uppercase; letter-spacing:0.1em; color:var(--muted); font-weight:600; margin-bottom:0.25rem;">Profiles</p>
+        <a href="https://www.linkedin.com/in/matthew-getter" target="_blank" rel="noopener noreferrer" style="color:var(--blue-lt); text-decoration:none; font-size:0.88rem; min-height:auto; display:inline;">LinkedIn</a>
+        <a href="https://app.joinhandshake.com/profiles/feye7d" target="_blank" rel="noopener noreferrer" style="color:var(--blue-lt); text-decoration:none; font-size:0.88rem; min-height:auto; display:inline;">Handshake</a>
+      </div>
+
+    </div>
+
+    <div style="border-top:1px solid var(--border); padding-top:1.5rem; display:flex; flex-wrap:wrap; gap:0.5rem; justify-content:space-between; align-items:center;">
+      <p style="color:var(--muted); font-size:0.75rem;">© 2025 Matthew Getter. All rights reserved.</p>
+      <p style="color:var(--muted); font-size:0.75rem;">Richmond, VA · Sole Proprietor</p>
+    </div>
+  </div>
+</footer>
+
+
+<!-- ════════════════════════════════
+     RESPONSIVE OVERRIDES
+════════════════════════════════ -->
+<style>
+  @media (min-width: 640px) {
+    #stats-grid    { grid-template-columns: repeat(2, 1fr) !important; }
+    #services-grid { grid-template-columns: repeat(2, 1fr) !important; }
+    #contact-grid  { grid-template-columns: repeat(2, 1fr) !important; }
+  }
+  @media (min-width: 768px) {
+    #work-grid    { grid-template-columns: repeat(2, 1fr) !important; }
+    #about-grid   { grid-template-columns: 1fr 1fr !important; }
+    #footer-grid  { grid-template-columns: 2fr 1fr 1fr !important; }
+  }
+  @media (min-width: 1024px) {
+    #stats-grid { grid-template-columns: repeat(4, 1fr) !important; }
+  }
+  @media (min-width: 768px) {
+    .service-card-inner { flex-direction: column !important; }
+  }
+</style>
+
+
+<!-- ════════════════════════════════
+     SCRIPTS
+════════════════════════════════ -->
+<script>
+  // ── Nav scroll shadow ──
+  window.addEventListener('scroll', () => {
+    document.getElementById('navbar').classList.toggle('scrolled', window.scrollY > 20);
+  });
+
+  // ── Hamburger ──
+  const hamburger = document.getElementById('hamburger');
+  const mobileMenu = document.getElementById('mobile-menu');
+  hamburger.addEventListener('click', () => {
+    hamburger.classList.toggle('open');
+    mobileMenu.classList.toggle('open');
+  });
+  function closeMenu() {
+    hamburger.classList.remove('open');
+    mobileMenu.classList.remove('open');
+  }
+  document.addEventListener('click', e => {
+    if (!hamburger.contains(e.target) && !mobileMenu.contains(e.target)) closeMenu();
+  });
+
+  // ── Scroll reveal ──
+  const revealObserver = new IntersectionObserver(entries => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) { entry.target.classList.add('visible'); revealObserver.unobserve(entry.target); }
+    });
+  }, { threshold: 0.07, rootMargin: '0px 0px -20px 0px' });
+  document.querySelectorAll('.reveal').forEach(el => revealObserver.observe(el));
+  window.addEventListener('load', () => {
+    document.querySelectorAll('.reveal').forEach(el => {
+      if (el.getBoundingClientRect().top < window.innerHeight) el.classList.add('visible');
+    });
+  });
+
+  // ── FAQ accordion ──
+  function toggleFaq(btn) {
+    const answer = btn.nextElementSibling;
+    const isOpen = btn.getAttribute('aria-expanded') === 'true';
+    // Close all
+    document.querySelectorAll('.faq-btn').forEach(b => {
+      b.setAttribute('aria-expanded', 'false');
+      b.nextElementSibling.classList.remove('open');
+    });
+    // Open clicked if it was closed
+    if (!isOpen) {
+      btn.setAttribute('aria-expanded', 'true');
+      answer.classList.add('open');
+    }
+  }
+
+  // ── Star rating ──
+  const starBtns = document.querySelectorAll('.star-btn');
+  const ratingInput = document.getElementById('r-rating');
+  let currentRating = 0;
+
+  function updateStars(val) {
+    starBtns.forEach(btn => {
+      btn.classList.toggle('active', parseInt(btn.dataset.val) <= val);
+    });
+  }
+
+  starBtns.forEach(btn => {
+    btn.addEventListener('click', () => {
+      currentRating = parseInt(btn.dataset.val);
+      ratingInput.value = currentRating;
+      updateStars(currentRating);
+    });
+    btn.addEventListener('mouseenter', () => updateStars(parseInt(btn.dataset.val)));
+  });
+  document.getElementById('star-row').addEventListener('mouseleave', () => updateStars(currentRating));
+
+  // ── Review form submit ──
+  // TODO: Connect this to a backend API endpoint to store pending reviews.
+  // The review data (name, business, rating, review text, permission) should be sent
+  // via POST request and stored with status: "pending" for owner review before publishing.
+  function handleReviewSubmit(e) {
+    e.preventDefault();
+    const rating = parseInt(document.getElementById('r-rating').value);
+    if (rating === 0) { alert('Please select a star rating.'); return; }
+    // --- Replace the block below with your actual API call ---
+    // const data = { name, business, rating, review, permission, status: 'pending' };
+    // fetch('/api/reviews', { method: 'POST', body: JSON.stringify(data), ... })
+    // ---------------------------------------------------------
+    document.getElementById('review-fields').style.display = 'none';
+    document.getElementById('review-success').style.display = 'block';
+  }
+</script>
+
+</body>
+</html>
