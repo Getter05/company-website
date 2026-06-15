@@ -344,6 +344,19 @@
     a.card, a.contact-row { display: block; min-height: auto; }
     span { min-height: auto; display: inline; }
 
+    /* ── Footer Logo ── */
+    .footer-logo {
+      height: 72px;
+      width: auto;
+      display: block;
+      object-fit: contain;
+      background: transparent;
+    }
+    
+    footer img {
+      background: transparent;
+    }
+    
     /* ── Responsive grid helpers ── */
     @media (min-width: 768px) {
       #desktop-links { display: flex !important; }
@@ -933,9 +946,9 @@
       <div>
         <div style="margin-bottom:0.75rem;">
           <img
-            src="https://media.base44.com/images/public/user_6a21e398a64e8e522d870d53/d5c3639aa_37DBDC0A-2402-42CB-B357-46EC191BAFFB.png"
+            src="logo.png"
             alt="Matthew Getter Websites"
-            style="height:30px; width:auto; object-fit:contain;"
+            class="footer-logo"
           />
         </div>
         <p style="color:var(--muted); font-size:0.85rem; margin-bottom:0.2rem;">Website design for small businesses</p>
