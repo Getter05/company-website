@@ -1,0 +1,9 @@
+{
+  "name": "matthew-getter-reviews-api",
+  "version": "1.0.0",
+  "description": "Reviews backend for Matthew Getter website",
+  "main": "reviews/index.js",
+  "dependencies": {
+    "@azure/data-tables": "^13.3.0"
+  }
+}
