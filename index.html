@@ -757,7 +757,7 @@
         <span style="color:var(--blue-lt); font-size:0.78rem; display:block; margin-top:0.25rem;">Reviews are reviewed before being published.</span>
       </p>
 
-      <form id="review-form" onsubmit="handleReviewSubmit(event)">
+      <form id="review-form">
         <div id="review-fields" style="display:grid; grid-template-columns:1fr; gap:1rem;">
 
           <div class="form-group">
@@ -1089,13 +1089,47 @@
   document.getElementById('star-row').addEventListener('mouseleave', () => updateStars(currentRating));
 
   // ── Review form submit ──
-  function handleReviewSubmit(e) {
+  const reviewForm = document.getElementById('review-form');
+  
+  reviewForm.addEventListener('submit', async function (e) {
     e.preventDefault();
+  
     const rating = parseInt(document.getElementById('r-rating').value);
-    if (rating === 0) { alert('Please select a star rating.'); return; }
-    document.getElementById('review-fields').style.display = 'none';
-    document.getElementById('review-success').style.display = 'block';
-  }
+  
+    if (rating === 0) {
+      alert('Please select a star rating.');
+      return;
+    }
+  
+    const payload = {
+      name: document.getElementById('r-name').value,
+      business: document.getElementById('r-business').value,
+      rating: rating,
+      review: document.getElementById('r-text').value,
+      permission: document.getElementById('r-permission').checked
+    };
+  
+    try {
+      const response = await fetch('/api/reviews', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(payload)
+      });
+  
+      if (!response.ok) {
+        alert('Something went wrong. Please try again.');
+        return;
+      }
+  
+      document.getElementById('review-fields').style.display = 'none';
+      document.getElementById('review-success').style.display = 'block';
+      reviewForm.reset();
+    } catch (error) {
+      alert('There was a problem submitting your review. Please try again.');
+    }
+  });
 </script>
 
 </body>
